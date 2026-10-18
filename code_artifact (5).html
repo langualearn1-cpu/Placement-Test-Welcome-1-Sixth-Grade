@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار تحديد المستوى التفاعلي (33 سؤالاً) - الأستاذ ماجد السويهري</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle at top right, #fdf2f8 0%, #f5f3ff 45%, #eef2ff 100%);
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            user-select: none;
+        }
+        .en-font {
+            font-family: 'Nunito', sans-serif;
+        }
+        .en-title {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .quote-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* بطاقات زجاجية جذابة */
+        .magic-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .picture-card {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .picture-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 28px -8px rgba(219, 39, 119, 0.15);
+        }
+
+        /* مربعات علامة الصح التفاعلية (السؤال 1) */
+        .check-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            background-color: #fdf2f8;
+        }
+        .check-option:hover {
+            background-color: #fce7f3;
+            transform: translateX(3px);
+        }
+        .check-box-square {
+            width: 22px;
+            height: 22px;
+            border: 2.5px solid #d946ef;
+            border-radius: 6px;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 15px;
+            color: transparent;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            flex-shrink: 0;
+        }
+        .check-option.checked {
+            background-color: #fae8ff;
+            border-color: #a855f7;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.15);
+        }
+        .check-option.checked .check-box-square {
+            background: linear-gradient(135deg, #9333ea, #ec4899);
+            border-color: #7e22ce;
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+        .check-option.correct-check {
+            background-color: #dcfce7 !important;
+            border-color: #16a34a !important;
+        }
+        .check-option.correct-check .check-box-square {
+            background: #16a34a !important;
+            border-color: #15803d !important;
+            color: #ffffff !important;
+        }
+        .check-option.wrong-check {
+            background-color: #ffe4e6 !important;
+            border-color: #e11d48 !important;
+        }
+        .check-option.wrong-check .check-box-square {
+            background: #e11d48 !important;
+            border-color: #be123c !important;
+            color: #ffffff !important;
+        }
+
+        /* أزرار الحرف الناقص (السؤال 2) */
+        .letter-choice-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            font-weight: 900;
+            font-size: 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2.5px solid #e2e8f0;
+            background-color: #ffffff;
+            color: #334155;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        }
+        .letter-choice-btn:hover {
+            border-color: #ec4899;
+            color: #be185d;
+            transform: translateY(-2px);
+        }
+        .letter-choice-btn.selected-letter {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #ffffff;
+            border-color: #4338ca;
+            transform: scale(1.1);
+            box-shadow: 0 6px 14px rgba(79, 70, 229, 0.3);
+        }
+        .letter-choice-btn.correct-letter {
+            background: #16a34a !important;
+            border-color: #15803d !important;
+            color: #ffffff !important;
+        }
+        .letter-choice-btn.wrong-letter {
+            background: #e11d48 !important;
+            border-color: #be123c !important;
+            color: #ffffff !important;
+        }
+
+        /* بطاقات ترتيب الحروف والكلمات (السؤال 3) */
+        .scramble-chip {
+            cursor: pointer;
+            transition: all 0.18s ease;
+            user-select: none;
+        }
+        .scramble-chip:hover {
+            transform: translateY(-2px) scale(1.04);
+        }
+        .scramble-chip:active {
+            transform: scale(0.95);
+        }
+
+        /* تأثير وضع دائرة بالقلم حول الإجابة الصحيحة (السؤال 4) */
+        .circle-option {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 16px;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 3px solid transparent;
+            background-color: #f8fafc;
+        }
+        .circle-option:hover {
+            background-color: #fce7f3;
+            color: #9d174d;
+        }
+        .circle-option.circled {
+            border-color: #db2777;
+            background-color: #fdf2f8;
+            color: #be185d;
+            box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.15);
+            font-weight: 900;
+            transform: scale(1.05);
+        }
+        .circle-option.correct-circle {
+            border-color: #16a34a !important;
+            background-color: #dcfce7 !important;
+            color: #15803d !important;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2) !important;
+        }
+        .circle-option.wrong-circle {
+            border-color: #dc2626 !important;
+            background-color: #ffe4e6 !important;
+            color: #b91c1c !important;
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-container {
+                box-shadow: none !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                margin-bottom: 12px !important;
+            }
+            .lesson-section {
+                display: block !important;
+            }
+            .page-break-avoid {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen py-5 px-3 sm:px-6 text-slate-800">
+
+    <div class="max-w-7xl mx-auto">
+
+        <!-- الترويسة الخيالية الجذابة مع اللوقو واسم الأستاذ ماجد السويهري -->
+        <header class="bg-gradient-to-r from-[#4a148c] via-[#881337] to-[#be185d] text-white rounded-3xl shadow-2xl overflow-hidden border-4 border-pink-200 mb-6 print-container page-break-avoid relative">
+            <!-- زخرفة خلفية ناعمة -->
+            <div class="absolute -top-12 -left-12 w-44 h-44 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -right-12 w-56 h-56 bg-amber-300/15 rounded-full blur-2xl pointer-events-none"></div>
+
+            <!-- الشريط العلوي: اسم الطالب، عنوان الاختبار، الدرجة من 33 -->
+            <div class="px-5 pt-4 pb-2.5 flex flex-wrap items-center justify-between gap-3 bg-black/15 border-b border-white/15">
+                <div class="bg-white text-slate-800 px-4 py-1.5 rounded-2xl flex items-center gap-2 shadow-md min-w-[240px] sm:min-w-[300px]" dir="ltr">
+                    <label for="studentName" class="en-font font-extrabold text-pink-800 text-xs sm:text-sm whitespace-nowrap">Name:</label>
+                    <input type="text" id="studentName" dir="rtl" placeholder="اكتب اسم الطالب هنا..." 
+                        class="w-full bg-transparent border-b-2 border-pink-300 focus:border-purple-700 focus:outline-none font-bold text-slate-900 px-1 text-sm">
+                </div>
+
+                <div class="text-center mx-auto">
+                    <span class="en-title tracking-wider text-amber-300 font-extrabold text-sm sm:text-lg drop-shadow">
+                        ✨ VOCABULARY & PHRASES PLACEMENT TEST (33 QUESTIONS) ✨
+                    </span>
+                </div>
+
+                <div class="bg-white text-slate-800 px-5 py-1.5 rounded-2xl font-extrabold flex items-center gap-2 shadow-md" dir="ltr">
+                    <span class="en-font text-slate-700">Score:</span>
+                    <span id="headerScore" class="text-xl text-pink-700 en-font underline decoration-2">--</span>
+                    <span class="en-font text-slate-700">/ 33</span>
+                </div>
+            </div>
+
+            <!-- الشعار، العنوان الرئيسي، واسم الأستاذ ماجد السويهري -->
+            <div class="px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+                <!-- شعار Langua Learn المعتمد -->
+                <div class="flex items-center gap-3" dir="ltr">
+                    <div class="bg-white px-4 py-2 rounded-2xl shadow-lg flex items-center gap-2.5 border-2 border-pink-100">
+                        <svg class="w-11 h-11 flex-shrink-0" viewBox="0 0 100 100" fill="none">
+                            <path d="M12 10 H76 V34 H61 V24 H26 V76 H56 V90 H12 Z" fill="#EB8258"/>
+                            <polygon points="50,35 14,50 50,65 86,50" fill="#3B096C"/>
+                            <path d="M32 58 V74 C32 81 68 81 68 74 V58 L50 67 Z" fill="#4A148C"/>
+                            <circle cx="74" cy="64" r="4" fill="#3B096C"/>
+                        </svg>
+                        <div class="leading-none text-left en-title">
+                            <div class="text-[#EB8258] font-extrabold text-base tracking-wider">LANGUA</div>
+                            <div class="text-[#4A148C] font-extrabold text-base tracking-wider">LEARN</div>
+                            <div class="text-[9px] text-[#EB8258] font-bold tracking-tight mt-0.5">Learn, Grow, Succeed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- عنوان الاختبار التفاعلي -->
+                <div class="text-center">
+                    <h1 class="en-title text-2xl sm:text-4xl font-extrabold tracking-wide text-white drop-shadow-md" dir="ltr">
+                        Interactive Placement Worksheet
+                    </h1>
+                    <div class="mt-2 inline-flex flex-wrap items-center justify-center gap-2 bg-pink-100 text-pink-950 px-5 py-1 rounded-full text-xs sm:text-sm font-black shadow-md border-2 border-white">
+                        <span>🎯 اختبار تحديد المستوى التفاعلي الذكي (33 سؤالاً) — الصور • الحروف الناقصة • الترتيب • المعاني</span>
+                    </div>
+                </div>
+
+                <!-- اسم الأستاذ ماجد السويهري -->
+                <div class="flex items-center gap-3 bg-white/15 backdrop-blur-sm px-4 py-2.5 rounded-2xl border border-white/25 shadow-inner">
+                    <div class="text-right">
+                        <div class="text-white text-sm sm:text-lg font-black drop-shadow">إعداد الأستاذ: ماجد السويهري</div>
+                        <div class="text-amber-300 text-xs font-extrabold mt-0.5">معلم اللغة الإنجليزية</div>
+                    </div>
+                    <div class="w-11 h-11 rounded-xl bg-amber-400/20 border border-amber-300/40 flex items-center justify-center text-2xl shadow-sm">
+                        🎓
+                    </div>
+                </div>
+            </div>
+
+            <!-- شريط التنقل السريع بين أقسام الاختبار الأربعة -->
+            <div class="bg-black/25 px-4 py-2.5 flex flex-wrap items-center justify-center gap-2 no-print border-t border-white/15">
+                <button onclick="filterSection('all')" id="tab-all" class="px-4 py-1.5 rounded-xl font-extrabold text-xs sm:text-sm bg-amber-400 text-slate-900 shadow transition">
+                    📋 عرض جميع الأقسام (33 سؤالاً)
+                </button>
+                <button onclick="filterSection(1)" id="tab-1" class="px-3.5 py-1.5 rounded-xl font-extrabold text-xs sm:text-sm bg-white/10 hover:bg-white/20 text-white transition">
+                    1️⃣ السؤال 1: ضع علامة صح (1–10)
+                </button>
+                <button onclick="filterSection(2)" id="tab-2" class="px-3.5 py-1.5 rounded-xl font-extrabold text-xs sm:text-sm bg-white/10 hover:bg-white/20 text-white transition">
+                    2️⃣ السؤال 2: الحرف الناقص (11–19)
+                </button>
+                <button onclick="filterSection(3)" id="tab-3" class="px-3.5 py-1.5 rounded-xl font-extrabold text-xs sm:text-sm bg-white/10 hover:bg-white/20 text-white transition">
+                    3️⃣ السؤال 3: رتب الحروف (20–26)
+                </button>
+                <button onclick="filterSection(4)" id="tab-4" class="px-3.5 py-1.5 rounded-xl font-extrabold text-xs sm:text-sm bg-white/10 hover:bg-white/20 text-white transition">
+                    4️⃣ السؤال 4: ضع دائرة (27–33)
+                </button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- لوحة الأسئلة (33 سؤالاً) وتحديد المستوى (على اليمين) -->
+            <aside class="lg:col-span-4 magic-card rounded-3xl shadow-xl border-2 border-pink-200 p-4 sm:p-5 lg:sticky lg:top-4 print-container page-break-avoid">
+                <div class="flex items-center justify-between border-b border-pink-100 pb-3 mb-3">
+                    <h2 class="font-extrabold text-base sm:text-lg text-purple-950 flex items-center gap-2">
+                        <span class="bg-pink-100 text-pink-700 p-1.5 rounded-xl">🧭</span>
+                        لوحة الأسئلة (33 سؤالاً)
+                    </h2>
+                    <span id="progressBadge" class="text-xs font-extrabold bg-pink-50 text-pink-700 px-3 py-1 rounded-full border border-pink-200">
+                        0 / 33 مجاب
+                    </span>
+                </div>
+
+                <!-- شريط التقدم المئوي -->
+                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden mb-4 p-0.5 border border-slate-200">
+                    <div id="progressBar" class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <!-- شبكة أرقام الأسئلة الـ 33 مقسمة حسب الأقسام الأربعة -->
+                <div class="space-y-2.5 max-h-[380px] overflow-y-auto pr-1 mb-4">
+                    <!-- القسم 1: 1 إلى 10 -->
+                    <div class="bg-pink-50/80 border border-pink-200 rounded-2xl p-2.5">
+                        <div class="flex items-center justify-between text-[11px] font-extrabold text-pink-950 mb-1.5">
+                            <span>1) Check the correct word (ضع صح ☑)</span>
+                            <span>(1 – 10)</span>
+                        </div>
+                        <div id="navGridSec1" class="grid grid-cols-5 gap-1.5"></div>
+                    </div>
+
+                    <!-- القسم 2: 11 إلى 19 -->
+                    <div class="bg-indigo-50/80 border border-indigo-200 rounded-2xl p-2.5">
+                        <div class="flex items-center justify-between text-[11px] font-extrabold text-indigo-950 mb-1.5">
+                            <span>2) Missing letter (الحرف الناقص)</span>
+                            <span>(11 – 19)</span>
+                        </div>
+                        <div id="navGridSec2" class="grid grid-cols-5 gap-1.5"></div>
+                    </div>
+
+                    <!-- القسم 3: 20 إلى 26 -->
+                    <div class="bg-purple-50/80 border border-purple-200 rounded-2xl p-2.5">
+                        <div class="flex items-center justify-between text-[11px] font-extrabold text-purple-950 mb-1.5">
+                            <span>3) Unscramble letters (رتب الحروف)</span>
+                            <span>(20 – 26)</span>
+                        </div>
+                        <div id="navGridSec3" class="grid grid-cols-7 gap-1.5"></div>
+                    </div>
+
+                    <!-- القسم 4: 27 إلى 33 -->
+                    <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-2.5">
+                        <div class="flex items-center justify-between text-[11px] font-extrabold text-amber-950 mb-1.5">
+                            <span>4) Read & choose (ضع دائرة ⭕)</span>
+                            <span>(27 – 33)</span>
+                        </div>
+                        <div id="navGridSec4" class="grid grid-cols-7 gap-1.5"></div>
+                    </div>
+                </div>
+
+                <!-- دليل ألوان اللوحة -->
+                <div class="bg-slate-50 rounded-2xl p-2.5 text-[11px] border border-slate-100 mb-3">
+                    <div class="grid grid-cols-2 gap-1.5 font-bold text-slate-600">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-slate-200 inline-block"></span>
+                            <span>غير مجاب</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-pink-600 inline-block"></span>
+                            <span>تمت الإجابة</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                            <span>إجابة صحيحة ✓</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
+                            <span>إجابة خاطئة ✗</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مؤشر مستوى الطالب التفاعلي -->
+                <div class="border-t border-slate-100 pt-3">
+                    <div class="text-xs font-extrabold text-slate-500 mb-1.5">مؤشر مستوى الطالب:</div>
+                    <div id="liveLevelBox" class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-3.5 text-center border border-pink-200">
+                        <div class="text-2xl mb-0.5" id="levelEmoji">📊</div>
+                        <div class="font-extrabold text-purple-950 text-sm" id="levelTitle">بانتظار إكمال الاختبار (33 سؤالاً)</div>
+                        <p class="text-[11px] text-slate-600 mt-1" id="levelDesc">أجب عن الأسئلة ثم اضغط على اعتماد النتيجة لتحديد المستوى بدقة.</p>
+                    </div>
+                </div>
+
+                <!-- أزرار الاعتماد والطباعة والإعادة -->
+                <div class="mt-3.5 space-y-2 no-print">
+                    <button onclick="evaluateQuiz()" class="w-full bg-gradient-to-r from-purple-700 to-pink-600 hover:from-purple-800 hover:to-pink-700 active:scale-[0.99] text-white font-extrabold py-2.5 px-4 rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 text-sm">
+                        <span>✅</span>
+                        <span>اعتماد الإجابات وتحديد المستوى</span>
+                    </button>
+
+                    <button onclick="printStudentResult()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-extrabold py-2.5 px-4 rounded-2xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 text-sm">
+                        <span>🖨️</span>
+                        <span>طباعة نتيجة الطالب</span>
+                    </button>
+
+                    <button onclick="resetQuiz()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 px-4 rounded-2xl transition flex items-center justify-center gap-2 text-xs">
+                        <span>🔄</span>
+                        <span>إعادة الاختبار من جديد</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- القسم الأيسر: أوراق العمل التفاعلية الأربعة (33 سؤالاً) -->
+            <main class="lg:col-span-8 space-y-8">
+
+                <!-- ========================================================================= -->
+                <!-- 1️⃣ SECTION 1: Look at each picture and check the correct word (1–10)      -->
+                <!-- ========================================================================= -->
+                <div id="section-block-1" class="lesson-section space-y-6">
+                    <section class="magic-card rounded-3xl shadow-lg border-[3px] border-pink-300 p-5 sm:p-6 print-container page-break-avoid">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-5 border-b-2 border-pink-100 pb-3">
+                            <div class="flex items-center gap-2.5" dir="ltr">
+                                <span class="w-9 h-9 rounded-xl bg-pink-600 text-white font-black flex items-center justify-center en-title text-lg shadow">1</span>
+                                <h2 class="en-title font-extrabold text-lg sm:text-xl text-slate-800">
+                                    1) Look at each picture and check the correct word.
+                                </h2>
+                            </div>
+                            <span class="text-xs font-extrabold text-pink-900 bg-pink-100 px-3.5 py-1 rounded-xl border border-pink-200">
+                                ☑️ ضع علامة صح أمام الكلمة الصحيحة لكل صورة (10 أسئلة)
+                            </span>
+                        </div>
+
+                        <!-- شبكة الـ 10 صور ومربعات الاختيار مطابقة تماماً للصورة المرفقة -->
+                        <div id="sec1Grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 en-font" dir="ltr"></div>
+
+                        <!-- مقولة مالكوم إكس في أسفل الورقة الأولى -->
+                        <div class="mt-6 border-2 border-pink-200 rounded-2xl p-4 bg-pink-50/50 relative text-center max-w-2xl mx-auto" dir="ltr">
+                            <span class="text-4xl text-pink-300 font-serif absolute top-1 left-3 select-none">“</span>
+                            <p class="quote-font text-lg sm:text-xl text-pink-700 px-6">
+                                "Education is the passport to the future, for tomorrow belongs to those who prepare for it today."
+                            </p>
+                            <p class="text-xs font-extrabold text-pink-600 mt-1 en-font">— Malcolm X</p>
+                            <span class="text-4xl text-pink-300 font-serif absolute bottom-0 right-3 leading-none select-none">”</span>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ========================================================================= -->
+                <!-- 2️⃣ SECTION 2: Choose the missing letter (الأسئلة 11 إلى 19 - 9 أسئلة)      -->
+                <!-- ========================================================================= -->
+                <div id="section-block-2" class="lesson-section space-y-6">
+                    <section class="magic-card rounded-3xl shadow-lg border-[3px] border-indigo-300 p-5 sm:p-6 print-container page-break-avoid">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-5 border-b-2 border-indigo-100 pb-3">
+                            <div class="flex items-center gap-2.5" dir="ltr">
+                                <span class="w-9 h-9 rounded-xl bg-indigo-600 text-white font-black flex items-center justify-center en-title text-lg shadow">2</span>
+                                <h2 class="en-title font-extrabold text-lg sm:text-xl text-slate-800">
+                                    2) Choose the missing letter
+                                </h2>
+                            </div>
+                            <span class="text-xs font-extrabold text-indigo-900 bg-indigo-100 px-3.5 py-1 rounded-xl border border-indigo-200">
+                                🔤 اختر الحرف الناقص لإكمال الكلمة (9 أسئلة: 11 – 19)
+                            </span>
+                        </div>
+
+                        <!-- جدول الـ 9 كلمات (3×3) مطابق لورقة العمل -->
+                        <div id="sec2Grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 en-font" dir="ltr"></div>
+                    </section>
+                </div>
+
+                <!-- ========================================================================= -->
+                <!-- 3️⃣ SECTION 3: Unscramble the letters (الأسئلة 20 إلى 26 - 7 أسئلة)         -->
+                <!-- ========================================================================= -->
+                <div id="section-block-3" class="lesson-section space-y-6">
+                    <section class="magic-card rounded-3xl shadow-lg border-[3px] border-purple-300 p-5 sm:p-6 print-container page-break-avoid">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-5 border-b-2 border-purple-100 pb-3">
+                            <div class="flex items-center gap-2.5" dir="ltr">
+                                <span class="w-9 h-9 rounded-xl bg-purple-600 text-white font-black flex items-center justify-center en-title text-lg shadow">3</span>
+                                <h2 class="en-title font-extrabold text-lg sm:text-xl text-slate-800">
+                                    3) Unscramble the letters
+                                </h2>
+                            </div>
+                            <span class="text-xs font-extrabold text-purple-900 bg-purple-100 px-3.5 py-1 rounded-xl border border-purple-200">
+                                🧩 رتب الحروف بالضغط على البطاقات أو بالكتابة المباشرة (7 أسئلة: 20 – 26)
+                            </span>
+                        </div>
+
+                        <div id="sec3List" class="space-y-4 en-font" dir="ltr"></div>
+                    </section>
+                </div>
+
+                <!-- ========================================================================= -->
+                <!-- 4️⃣ SECTION 4: Read and choose (الأسئلة 27 إلى 33 - 7 أسئلة)                -->
+                <!-- ========================================================================= -->
+                <div id="section-block-4" class="lesson-section space-y-6">
+                    <section class="magic-card rounded-3xl shadow-lg border-[3px] border-amber-300 p-5 sm:p-6 print-container page-break-avoid">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-5 border-b-2 border-amber-100 pb-3">
+                            <div class="flex items-center gap-2.5" dir="ltr">
+                                <span class="w-9 h-9 rounded-xl bg-amber-500 text-white font-black flex items-center justify-center en-title text-lg shadow">4</span>
+                                <h2 class="en-title font-extrabold text-lg sm:text-xl text-slate-800">
+                                    4) Read and choose
+                                </h2>
+                            </div>
+                            <span class="text-xs font-extrabold text-amber-900 bg-amber-100 px-3.5 py-1 rounded-xl border border-amber-200">
+                                ⭕ اقرأ الجملة وضع دائرة حول الإجابة الصحيحة (7 أسئلة: 27 – 33)
+                            </span>
+                        </div>
+
+                        <div id="sec4List" class="space-y-3.5 en-font" dir="ltr"></div>
+                    </section>
+                </div>
+
+                <!-- ========================================================================= -->
+                <!-- بطاقة تقرير نتيجة ومستوى الطالب المعتمدة للطباعة (من 33 درجة)               -->
+                <!-- ========================================================================= -->
+                <section id="resultReportCard" class="hidden bg-white rounded-3xl shadow-2xl border-4 border-pink-300 p-6 sm:p-8 print-container page-break-avoid">
+                    <div class="flex flex-wrap items-center justify-between gap-4 border-b-2 border-pink-100 pb-4 mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-pink-100 text-pink-700 p-3 rounded-2xl text-2xl">🏆</div>
+                            <div>
+                                <span class="text-xs font-extrabold bg-purple-100 text-purple-800 px-3 py-1 rounded-full">تقرير تحديد المستوى المعتمد (33 سؤالاً)</span>
+                                <h2 class="text-2xl font-extrabold text-slate-900 mt-1">بطاقة نتيجة وتقييم مستوى الطالب</h2>
+                            </div>
+                        </div>
+                        <div class="text-left text-xs text-slate-500 font-bold" id="reportDate"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            <div class="text-xs text-slate-500 font-bold">اسم الطالب</div>
+                            <div id="reportStudentName" class="text-lg font-extrabold text-slate-900 mt-1">غير محدد</div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            <div class="text-xs text-slate-500 font-bold">الدرجة النهائية</div>
+                            <div id="reportFinalScore" class="text-2xl font-extrabold text-pink-700 en-font mt-0.5">0 / 33</div>
+                            <div id="reportPercentage" class="text-xs font-bold text-slate-500 mt-0.5">النسبة المئوية: 0%</div>
+                        </div>
+                        <div id="reportLevelBadgeBox" class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200">
+                            <div class="text-xs text-emerald-700 font-bold">المستوى العام</div>
+                            <div id="reportFinalLevel" class="text-lg font-extrabold text-emerald-900 mt-1">--</div>
+                        </div>
+                    </div>
+
+                    <h3 class="font-extrabold text-sm text-slate-700 mb-3">تحليل أداء الطالب في المهارات الأربع:</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6" id="skillsBreakdown"></div>
+
+                    <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 border border-pink-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <div class="text-xs font-extrabold text-purple-950 mb-1">💡 التوصية التربوية:</div>
+                            <p id="reportRecommendation" class="text-sm font-bold text-slate-700"></p>
+                        </div>
+                        <div class="border-r-2 border-pink-300 pr-4 whitespace-nowrap text-right">
+                            <div class="text-xs text-slate-500 font-bold">إعداد وإشراف معلم المادة:</div>
+                            <div class="text-base font-extrabold text-purple-950">الأستاذ ماجد السويهري</div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const TOTAL_QUESTIONS = 33;
+
+        // رسومات SVG عالية الدقة ومطابقة تماماً للصور العشر في الورقة الأولى
+        const pictureSVGs = {
+            glass: `<svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <path d="M26 16 H74 L68 84 C68 88 32 88 32 84 Z" fill="#dbeafe" fill-opacity="0.7" stroke="#475569" stroke-width="2.5" stroke-linejoin="round"/>
+                <ellipse cx="50" cy="16" rx="24" ry="5" fill="#eff6ff" stroke="#475569" stroke-width="2"/>
+                <ellipse cx="50" cy="82" rx="18" ry="4" fill="#93c5fd" stroke="#475569" stroke-width="1.8"/>
+                <path d="M33 26 L36 74" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+            </svg>`,
+            agree: `<svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <line x1="48" y1="12" x2="48" y2="21" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
+                <line x1="36" y1="16" x2="42" y2="23" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
+                <line x1="60" y1="16" x2="54" y2="23" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
+                <rect x="18" y="48" width="16" height="36" rx="4" fill="#86efac" stroke="#15803d" stroke-width="2.5"/>
+                <path d="M34 52 C42 52 46 38 48 28 C50 23 56 24 56 31 C56 38 54 45 54 45 H74 C79 45 81 51 77 55 C81 58 80 64 76 66 C79 69 78 75 73 77 C75 80 73 84 68 84 H34 Z" fill="#ffffff" stroke="#15803d" stroke-width="2.5" stroke-linejoin="round"/>
+            </svg>`,
+            taxi: `<svg viewBox="0 0 120 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <rect x="48" y="24" width="24" height="9" rx="3" fill="#fde047" stroke="#ca8a04" stroke-width="2"/>
+                <path d="M26 52 L38 33 H82 L94 52 Z" fill="#facc15" stroke="#ca8a04" stroke-width="2"/>
+                <path d="M41 37 H57 V50 H33 Z" fill="#bae6fd"/>
+                <path d="M62 37 H79 L87 50 H62 Z" fill="#bae6fd"/>
+                <rect x="12" y="50" width="96" height="24" rx="8" fill="#facc15" stroke="#ca8a04" stroke-width="2"/>
+                <rect x="34" y="57" width="52" height="6" fill="#1e293b"/>
+                <rect x="38" y="57" width="6" height="6" fill="#ffffff"/>
+                <rect x="50" y="57" width="6" height="6" fill="#ffffff"/>
+                <rect x="62" y="57" width="6" height="6" fill="#ffffff"/>
+                <rect x="74" y="57" width="6" height="6" fill="#ffffff"/>
+                <circle cx="32" cy="74" r="11" fill="#1e293b"/>
+                <circle cx="32" cy="74" r="5" fill="#94a3b8"/>
+                <circle cx="88" cy="74" r="11" fill="#1e293b"/>
+                <circle cx="88" cy="74" r="5" fill="#94a3b8"/>
+            </svg>`,
+            helmet: `<svg viewBox="0 0 110 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <path d="M18 64 C18 32 92 32 92 64 Z" fill="#fcd34d" stroke="#d97706" stroke-width="2.5"/>
+                <path d="M46 28 C50 25 60 25 64 28 L68 58 H42 Z" fill="#fde68a" stroke="#d97706" stroke-width="2"/>
+                <path d="M10 64 Q55 78 100 62 L95 70 Q55 84 14 70 Z" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+            </svg>`,
+            tie: `<svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <polygon points="38,14 62,14 56,28 44,28" fill="#0284c7" stroke="#0369a1" stroke-width="2"/>
+                <polygon points="44,28 56,28 66,74 50,90 34,74" fill="#0ea5e9" stroke="#0369a1" stroke-width="2"/>
+                <line x1="42" y1="38" x2="58" y2="48" stroke="#0c4a6e" stroke-width="4"/>
+                <line x1="39" y1="52" x2="62" y2="66" stroke="#0c4a6e" stroke-width="4"/>
+                <line x1="36" y1="66" x2="58" y2="80" stroke="#0c4a6e" stroke-width="4"/>
+            </svg>`,
+            storyboard: `<svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <line x1="36" y1="70" x2="26" y2="90" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+                <line x1="64" y1="70" x2="74" y2="90" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+                <rect x="45" y="12" width="10" height="8" fill="#ffffff" stroke="#0f172a" stroke-width="2.5"/>
+                <rect x="16" y="20" width="68" height="50" fill="#ffffff" stroke="#0f172a" stroke-width="2.5"/>
+                <line x1="50" y1="20" x2="50" y2="70" stroke="#0f172a" stroke-width="2.5"/>
+                <line x1="16" y1="45" x2="84" y2="45" stroke="#0f172a" stroke-width="2.5"/>
+                <circle cx="24" cy="28" r="3" fill="#0f172a"/>
+                <polyline points="20,45 32,33 44,45" fill="none" stroke="#0f172a" stroke-width="2"/>
+                <polyline points="54,45 64,32 76,45" fill="none" stroke="#0f172a" stroke-width="2"/>
+                <polyline points="54,70 66,56 80,70" fill="none" stroke="#0f172a" stroke-width="2"/>
+            </svg>`,
+            cookie: `<svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <circle cx="50" cy="50" r="36" fill="#d97706" stroke="#92400e" stroke-width="2.5"/>
+                <circle cx="36" cy="34" r="4.5" fill="#3f2305"/>
+                <circle cx="58" cy="28" r="4" fill="#3f2305"/>
+                <circle cx="66" cy="44" r="5" fill="#3f2305"/>
+                <circle cx="46" cy="48" r="4.5" fill="#3f2305"/>
+                <circle cx="30" cy="56" r="4" fill="#3f2305"/>
+                <circle cx="56" cy="64" r="5" fill="#3f2305"/>
+                <circle cx="40" cy="70" r="3.5" fill="#3f2305"/>
+                <circle cx="70" cy="60" r="3.5" fill="#3f2305"/>
+            </svg>`,
+            gate: `<svg viewBox="0 0 110 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <path d="M14 82 V38 Q55 16 96 38 V82 H14 Z" fill="none" stroke="#0f172a" stroke-width="3.5"/>
+                <line x1="24" y1="34" x2="24" y2="82" stroke="#0f172a" stroke-width="2.5"/>
+                <line x1="34" y1="30" x2="34" y2="82" stroke="#0f172a" stroke-width="2.5"/>
+                <line x1="44" y1="28" x2="44" y2="82" stroke="#0f172a" stroke-width="2.5"/>
+                <line x1="55" y1="26" x2="55" y2="82" stroke="#0f172a" stroke-width="3"/>
+                <line x1="66" y1="28" x2="66" y2="82" stroke="#0f172a" stroke-width="2.5"/>
+                <line x1="76" y1="30" x2="76" y2="82" stroke="#0f172a" stroke-width="2.5"/>
+                <line x1="86" y1="34" x2="86" y2="82" stroke="#0f172a" stroke-width="2.5"/>
+                <line x1="14" y1="56" x2="96" y2="56" stroke="#0f172a" stroke-width="2.5"/>
+            </svg>`,
+            journalist: `<svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <circle cx="50" cy="28" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+                <path d="M36 26 C36 12 64 12 64 26" fill="#b45309"/>
+                <path d="M26 86 L32 46 H68 L74 86 Z" fill="#64748b" stroke="#334155" stroke-width="2"/>
+                <polygon points="45,46 55,46 50,62" fill="#e2e8f0"/>
+                <rect x="47" y="56" width="6" height="16" rx="2" fill="#1e293b"/>
+                <circle cx="50" cy="53" r="5" fill="#94a3b8" stroke="#1e293b" stroke-width="1.5"/>
+            </svg>`,
+            go_away: `<svg viewBox="0 0 110 100" class="w-24 h-24 mx-auto drop-shadow-sm">
+                <!-- الشخص المطرود الحزين -->
+                <circle cx="24" cy="36" r="8" fill="#334155"/>
+                <path d="M28 46 Q34 58 34 70 L26 86 M34 70 L42 86" stroke="#334155" stroke-width="6" stroke-linecap="round" fill="none"/>
+                <!-- الشخص الذي يشير بيده اذهب بعيداً -->
+                <circle cx="76" cy="26" r="9" fill="#334155"/>
+                <line x1="74" y1="40" x2="44" y2="32" stroke="#334155" stroke-width="5.5" stroke-linecap="round"/>
+                <path d="M74 38 L72 66 L64 86 M72 66 L82 86" stroke="#334155" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+            </svg>`
+        };
+
+        // بيانات القسم الأول (الأسئلة 1 إلى 10: ضع علامة صح)
+        const sec1Data = [
+            { qNum: 1, svg: pictureSVGs.glass, options: ['go away', 'Tie', 'glass'], correct: 'glass' },
+            { qNum: 2, svg: pictureSVGs.agree, options: ['agree', 'Cookie', 'gate'], correct: 'agree' },
+            { qNum: 3, svg: pictureSVGs.taxi, options: ['glass', 'Taxi', 'Tie'], correct: 'Taxi' },
+            { qNum: 4, svg: pictureSVGs.helmet, options: ['Storyboard', 'Journalist', 'Helmet'], correct: 'Helmet' },
+            { qNum: 5, svg: pictureSVGs.tie, options: ['Tie', 'Helmet', 'gate'], correct: 'Tie' },
+            { qNum: 6, svg: pictureSVGs.storyboard, options: ['agree', 'Taxi', 'Storyboard'], correct: 'Storyboard' },
+            { qNum: 7, svg: pictureSVGs.cookie, options: ['agree', 'Cookie', 'Taxi'], correct: 'Cookie' },
+            { qNum: 8, svg: pictureSVGs.gate, options: ['gate', 'Journalist', 'go away'], correct: 'gate' },
+            { qNum: 9, svg: pictureSVGs.journalist, options: ['gate', 'Helmet', 'Journalist'], correct: 'Journalist' },
+            { qNum: 10, svg: pictureSVGs.go_away, options: ['Tie', 'go away', 'Storyboard'], correct: 'go away' }
+        ];
+
+        // بيانات القسم الثاني (الأسئلة 11 إلى 19: الحرف الناقص)
+        const sec2Data = [
+            { qNum: 11, prefix: 'ag', suffix: 'ee', choices: ['r', 'b'], correct: 'r', fullWord: 'agree' },
+            { qNum: 12, prefix: 'no pr', suffix: 'blem', choices: ['a', 'o'], correct: 'o', fullWord: 'no problem' },
+            { qNum: 13, prefix: 'if you wa', suffix: 't', choices: ['m', 'n'], correct: 'n', fullWord: 'if you want' },
+            { qNum: 14, prefix: 'gl', suffix: 'ss', choices: ['a', 'e'], correct: 'a', fullWord: 'glass' },
+            { qNum: 15, prefix: 'go a', suffix: 'ay', choices: ['w', 'm'], correct: 'w', fullWord: 'go away' },
+            { qNum: 16, prefix: 'at the mo', suffix: 'ent', choices: ['n', 'm'], correct: 'm', fullWord: 'at the moment' },
+            { qNum: 17, prefix: 'in a min', suffix: 'te', choices: ['n', 'u'], correct: 'u', fullWord: 'in a minute' },
+            { qNum: 18, prefix: 'las', suffix: ' name', choices: ['t', 'i'], correct: 't', fullWord: 'last name' },
+            { qNum: 19, prefix: 'Coo', suffix: 'ie', choices: ['c', 'k'], correct: 'k', fullWord: 'Cookie' }
+        ];
+
+        // بيانات القسم الثالث (الأسئلة 20 إلى 26: رتب الحروف)
+        const sec3Data = [
+            { qNum: 20, numLabel: 1, prompt: '[ t a ] [ hte ] [ monetm ]', chips: ['at', 'the', 'moment'], correct: 'at the moment' },
+            { qNum: 21, numLabel: 2, prompt: '[ sgasl ]', chips: ['g', 'l', 'a', 's', 's'], correct: 'glass' },
+            { qNum: 22, numLabel: 3, prompt: '[ geera ]', chips: ['a', 'g', 'r', 'e', 'e'], correct: 'agree' },
+            { qNum: 23, numLabel: 4, prompt: '[ o n ] [ prboeml ]', chips: ['no', 'problem'], correct: 'no problem' },
+            { qNum: 24, numLabel: 5, prompt: '[ f i ] [ ouy ] [ wnta ]', chips: ['if', 'you', 'want'], correct: 'if you want' },
+            { qNum: 25, numLabel: 6, prompt: '[ n i ] [ a ] [ mteuin ]', chips: ['in', 'a', 'minute'], correct: 'in a minute' },
+            { qNum: 26, numLabel: 7, prompt: '[ o g ] [ aywa ]', chips: ['go', 'away'], correct: 'go away' }
+        ];
+
+        // بيانات القسم الرابع (الأسئلة 27 إلى 33: اقرأ وضع دائرة حول الإجابة الصحيحة)
+        const sec4Data = [
+            {
+                qNum: 27,
+                numLabel: 1,
+                text: 'Having the same opinion as someone else means to:',
+                options: ['go away', 'agree', 'in a minute'],
+                correct: 'agree'
+            },
+            {
+                qNum: 28,
+                numLabel: 2,
+                text: '“I’m happy to if you are!” means:',
+                options: ['no problem', 'if you want', 'at the moment'],
+                correct: 'if you want'
+            },
+            {
+                qNum: 29,
+                numLabel: 3,
+                text: '“I don’t want you here!” means:',
+                options: ['go away!', 'if you want', 'No problem!'],
+                correct: 'go away!'
+            },
+            {
+                qNum: 30,
+                numLabel: 4,
+                text: 'An object you keep a drink in is a:',
+                options: ['glass', 'agree', 'problem'],
+                correct: 'glass'
+            },
+            {
+                qNum: 31,
+                numLabel: 5,
+                text: '“Right now” means:',
+                options: ['in a minute', 'at the moment', 'no problem'],
+                correct: 'at the moment'
+            },
+            {
+                qNum: 32,
+                numLabel: 6,
+                text: '“That’s fine!” means:',
+                options: ['Go away!', 'no problem', 'at the moment'],
+                correct: 'no problem'
+            },
+            {
+                qNum: 33,
+                numLabel: 7,
+                text: '“Very soon” means:',
+                options: ['in a minute', 'at the moment', 'agree'],
+                correct: 'in a minute'
+            }
+        ];
+
+        let userAnswers = {};
+        for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+            userAnswers[i] = null;
+        }
+        let isSubmitted = false;
+
+        function renderAllSections() {
+            // 1. Render Section 1 (10 Picture Checkboxes)
+            const sec1Grid = document.getElementById('sec1Grid');
+            sec1Grid.innerHTML = '';
+            sec1Data.forEach(item => {
+                const card = document.createElement('div');
+                card.id = `qRow-${item.qNum}`;
+                card.className = "picture-card bg-white rounded-2xl border-2 border-pink-200 p-3.5 flex items-center gap-4 shadow-sm";
+
+                const optionsHtml = item.options.map((opt, idx) => `
+                    <div id="check-${item.qNum}-${idx}" onclick="selectCheckOption(${item.qNum}, '${opt.replace(/'/g, "\\'")}', ${idx})" class="check-option">
+                        <span class="check-box-square">✓</span>
+                        <span class="font-extrabold text-slate-800 text-sm sm:text-base">${opt}</span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="w-28 sm:w-32 flex-shrink-0 bg-pink-50/60 border-2 border-pink-200 rounded-xl p-2 flex flex-col items-center justify-center relative">
+                        <span class="absolute top-1 left-1.5 text-[10px] font-black text-pink-700 bg-pink-100 px-1.5 py-0.2 rounded-full">#${item.qNum}</span>
+                        <button type="button" onclick="speakText('${item.correct}')" title="استمع للنطق" class="absolute top-1 right-1.5 text-xs opacity-70 hover:opacity-100 no-print">🔊</button>
+                        ${item.svg}
+                    </div>
+                    <div class="flex-1 space-y-2">
+                        ${optionsHtml}
+                        <span id="badge-${item.qNum}" class="hidden text-[11px] font-extrabold px-2.5 py-0.5 rounded-full mt-1" dir="rtl"></span>
+                    </div>
+                `;
+                sec1Grid.appendChild(card);
+            });
+
+            // 2. Render Section 2 (9 Missing Letters)
+            const sec2Grid = document.getElementById('sec2Grid');
+            sec2Grid.innerHTML = '';
+            sec2Data.forEach(item => {
+                const box = document.createElement('div');
+                box.id = `qRow-${item.qNum}`;
+                box.className = "bg-white rounded-2xl border-2 border-slate-300 overflow-hidden shadow-sm hover:border-indigo-400 transition";
+
+                const buttonsHtml = item.choices.map(ch => `
+                    <button type="button" id="letterBtn-${item.qNum}-${ch}" onclick="selectMissingLetter(${item.qNum}, '${ch}')" class="letter-choice-btn">
+                        ${ch}
+                    </button>
+                `).join('');
+
+                box.innerHTML = `
+                    <div class="bg-indigo-50/70 px-3 py-3 border-b-2 border-slate-200 text-center relative">
+                        <span class="absolute top-1.5 left-2 text-[10px] font-black text-indigo-700 bg-indigo-100 px-1.5 rounded">#${item.qNum}</span>
+                        <button type="button" onclick="speakText('${item.fullWord}')" class="absolute top-1.5 right-2 text-xs opacity-70 hover:opacity-100 no-print">🔊</button>
+                        <div class="text-lg sm:text-xl font-black text-[#1e3a8a] tracking-wide mt-2">
+                            ${item.prefix}<span id="missingSlot-${item.qNum}" class="inline-block min-w-[22px] border-b-2 border-pink-600 text-pink-600 px-1 mx-0.5">_</span>${item.suffix}
+                        </div>
+                    </div>
+                    <div class="p-3 flex flex-col items-center justify-center bg-white">
+                        <div class="flex items-center justify-center gap-6">
+                            ${buttonsHtml}
+                        </div>
+                        <span id="badge-${item.qNum}" class="hidden text-[11px] font-extrabold px-2.5 py-0.5 rounded-full mt-2" dir="rtl"></span>
+                    </div>
+                `;
+                sec2Grid.appendChild(box);
+            });
+
+            // 3. Render Section 3 (7 Unscramble Letters)
+            const sec3List = document.getElementById('sec3List');
+            sec3List.innerHTML = '';
+            const colors = ['text-slate-800', 'text-pink-600', 'text-purple-700', 'text-pink-600', 'text-rose-600', 'text-pink-600', 'text-slate-800'];
+            sec3Data.forEach((item, idx) => {
+                const row = document.createElement('div');
+                row.id = `qRow-${item.qNum}`;
+                row.className = "bg-slate-50/90 rounded-2xl border-2 border-purple-100 p-4 flex flex-col gap-2.5 shadow-sm";
+
+                // خلط البطاقات المساعدة ليضغط عليها الطالب بسهولة
+                const shuffledChips = [...item.chips].sort(() => Math.random() - 0.5);
+                const isMultiWord = item.chips.length > 1 && item.chips[0].length > 1;
+                const chipsHtml = shuffledChips.map(piece => `
+                    <button type="button" onclick="appendScramblePiece(${item.qNum}, '${piece}', ${isMultiWord})" 
+                        class="scramble-chip bg-white hover:bg-purple-100 text-purple-900 border-2 border-purple-300 font-black px-3 py-1 rounded-xl text-sm shadow-sm no-print">
+                        + ${piece}
+                    </button>
+                `).join('');
+
+                row.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg font-black ${colors[idx]}">
+                            <span class="bg-purple-100 text-purple-900 text-xs px-2 py-0.5 rounded-lg">#${item.qNum}</span>
+                            <span>${item.numLabel}. ${item.prompt}</span>
+                            <span class="text-slate-900 text-xl">•</span>
+                        </div>
+                        <div class="flex items-center gap-2 flex-1 min-w-[220px] max-w-md">
+                            <input type="text" id="scrambleInput-${item.qNum}" oninput="handleScrambleInput(${item.qNum}, this.value)"
+                                placeholder="اكتب أو اضغط البطاقات أدناه..."
+                                class="w-full bg-white border-b-[3px] border-dotted border-slate-500 focus:border-purple-600 focus:outline-none px-3 py-1.5 rounded-xl font-black text-base sm:text-lg text-indigo-800 text-center">
+                            <button type="button" onclick="clearScrambleInput(${item.qNum})" class="text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-2.5 py-1.5 rounded-lg no-print">مسح</button>
+                            <button type="button" onclick="speakText('${item.correct}')" class="text-sm no-print" title="استمع">🔊</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                        <div class="flex flex-wrap items-center gap-1.5 no-print">
+                            <span class="text-[11px] font-bold text-slate-400 mr-1">مساعد الترتيب السريع:</span>
+                            ${chipsHtml}
+                        </div>
+                        <span id="badge-${item.qNum}" class="hidden text-[11px] font-extrabold px-2.5 py-0.5 rounded-full" dir="rtl"></span>
+                    </div>
+                `;
+                sec3List.appendChild(row);
+            });
+
+            // 4. Render Section 4 (7 Read and Choose Circle Questions)
+            const sec4List = document.getElementById('sec4List');
+            sec4List.innerHTML = '';
+            sec4Data.forEach(item => {
+                const row = document.createElement('div');
+                row.id = `qRow-${item.qNum}`;
+                row.className = "bg-slate-50/90 rounded-2xl border-2 border-amber-100 p-4 shadow-sm";
+
+                const optsHtml = item.options.map((opt, idx) => `
+                    <span id="circle-${item.qNum}-${idx}" onclick="selectCircleOption(${item.qNum}, '${opt.replace(/'/g, "\\'")}', ${idx})" class="circle-option font-black text-sm sm:text-base text-slate-700">
+                        ${opt}
+                    </span>
+                    ${idx < item.options.length - 1 ? '<span class="text-slate-400 font-black">/</span>' : ''}
+                `).join('');
+
+                row.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <div class="font-black text-slate-900 text-base sm:text-lg">
+                            <span class="text-xs bg-amber-100 text-amber-900 px-2 py-0.5 rounded-lg mr-1">#${item.qNum}</span>
+                            ${item.numLabel}. ${item.text}
+                        </div>
+                        <button type="button" onclick="speakText('${item.text.replace(/[“”"']/g, '')}')" class="text-xs opacity-70 hover:opacity-100 no-print">🔊</button>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-1.5 pl-2 sm:pl-6">
+                        <span class="text-slate-500 font-black text-lg">(</span>
+                        ${optsHtml}
+                        <span class="text-slate-500 font-black text-lg">)</span>
+                        <span id="badge-${item.qNum}" class="hidden text-[11px] font-extrabold px-2.5 py-0.5 rounded-full ml-auto" dir="rtl"></span>
+                    </div>
+                `;
+                sec4List.appendChild(row);
+            });
+        }
+
+        function initSidebarNavigation() {
+            const createNavBtn = (qNum) => {
+                const btn = document.createElement('button');
+                btn.id = `navBtn-${qNum}`;
+                btn.onclick = () => scrollToQuestion(qNum);
+                btn.className = "py-1 rounded-xl border border-slate-200 bg-white flex items-center justify-center font-extrabold text-[11px] hover:border-pink-500 transition";
+                btn.innerHTML = `<span id="navDot-${qNum}" class="w-5 h-5 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center en-font">${qNum}</span>`;
+                return btn;
+            };
+
+            const g1 = document.getElementById('navGridSec1');
+            for (let i = 1; i <= 10; i++) g1.appendChild(createNavBtn(i));
+
+            const g2 = document.getElementById('navGridSec2');
+            for (let i = 11; i <= 19; i++) g2.appendChild(createNavBtn(i));
+
+            const g3 = document.getElementById('navGridSec3');
+            for (let i = 20; i <= 26; i++) g3.appendChild(createNavBtn(i));
+
+            const g4 = document.getElementById('navGridSec4');
+            for (let i = 27; i <= 33; i++) g4.appendChild(createNavBtn(i));
+        }
+
+        // تفاعل السؤال الأول (ضع علامة صح)
+        function selectCheckOption(qNum, value, optIdx) {
+            if (isSubmitted) unlockForEditing();
+            userAnswers[qNum] = value;
+
+            const row = document.getElementById(`qRow-${qNum}`);
+            if (row) {
+                row.querySelectorAll('.check-option').forEach(el => {
+                    el.classList.remove('checked', 'correct-check', 'wrong-check');
+                });
+            }
+            const target = document.getElementById(`check-${qNum}-${optIdx}`);
+            if (target) target.classList.add('checked');
+
+            updateNavigationPanel();
+        }
+
+        // تفاعل السؤال الثاني (اختر الحرف الناقص)
+        function selectMissingLetter(qNum, letter) {
+            if (isSubmitted) unlockForEditing();
+            userAnswers[qNum] = letter;
+
+            const slot = document.getElementById(`missingSlot-${qNum}`);
+            if (slot) {
+                slot.textContent = letter;
+                slot.className = "inline-block min-w-[22px] border-b-2 border-indigo-600 text-pink-600 font-black px-1 mx-0.5 scale-110 transition";
+            }
+
+            const row = document.getElementById(`qRow-${qNum}`);
+            if (row) {
+                row.querySelectorAll('.letter-choice-btn').forEach(btn => {
+                    btn.classList.remove('selected-letter', 'correct-letter', 'wrong-letter');
+                });
+            }
+            const activeBtn = document.getElementById(`letterBtn-${qNum}-${letter}`);
+            if (activeBtn) activeBtn.classList.add('selected-letter');
+
+            updateNavigationPanel();
+        }
+
+        // تفاعل السؤال الثالث (رتب الحروف)
+        function appendScramblePiece(qNum, piece, isMultiWord) {
+            if (isSubmitted) unlockForEditing();
+            const input = document.getElementById(`scrambleInput-${qNum}`);
+            if (!input) return;
+
+            let current = input.value;
+            if (isMultiWord) {
+                current = current.trim() ? `${current.trim()} ${piece}` : piece;
+            } else {
+                current = `${current}${piece}`;
+            }
+            input.value = current;
+            handleScrambleInput(qNum, current);
+        }
+
+        function handleScrambleInput(qNum, val) {
+            if (isSubmitted) unlockForEditing();
+            const clean = val.trim();
+            userAnswers[qNum] = clean ? clean : null;
+            updateNavigationPanel();
+        }
+
+        function clearScrambleInput(qNum) {
+            if (isSubmitted) unlockForEditing();
+            const input = document.getElementById(`scrambleInput-${qNum}`);
+            if (input) input.value = '';
+            userAnswers[qNum] = null;
+            updateNavigationPanel();
+        }
+
+        // تفاعل السؤال الرابع (ضع دائرة حول الإجابة الصحيحة)
+        function selectCircleOption(qNum, value, optIdx) {
+            if (isSubmitted) unlockForEditing();
+            userAnswers[qNum] = value;
+
+            const row = document.getElementById(`qRow-${qNum}`);
+            if (row) {
+                row.querySelectorAll('.circle-option').forEach(el => {
+                    el.classList.remove('circled', 'correct-circle', 'wrong-circle');
+                });
+            }
+            const target = document.getElementById(`circle-${qNum}-${optIdx}`);
+            if (target) target.classList.add('circled');
+
+            updateNavigationPanel();
+        }
+
+        function getCorrectAnswerForQuestion(qNum) {
+            if (qNum <= 10) return sec1Data.find(d => d.qNum === qNum).correct;
+            if (qNum <= 19) return sec2Data.find(d => d.qNum === qNum).correct;
+            if (qNum <= 26) return sec3Data.find(d => d.qNum === qNum).correct;
+            return sec4Data.find(d => d.qNum === qNum).correct;
+        }
+
+        function isQuestionCorrect(qNum) {
+            const ans = userAnswers[qNum];
+            if (!ans) return false;
+            const target = getCorrectAnswerForQuestion(qNum);
+            return ans.trim().toLowerCase().replace(/\s+/g, ' ') === target.trim().toLowerCase().replace(/\s+/g, ' ');
+        }
+
+        function updateNavigationPanel() {
+            let answeredCount = 0;
+            for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+                const dot = document.getElementById(`navDot-${i}`);
+                const btn = document.getElementById(`navBtn-${i}`);
+                if (!dot || !btn) continue;
+
+                if (userAnswers[i]) {
+                    answeredCount++;
+                    if (!isSubmitted) {
+                        dot.className = "w-5 h-5 rounded-full bg-pink-600 text-white flex items-center justify-center en-font";
+                        dot.textContent = i;
+                        btn.className = "py-1 rounded-xl border border-pink-400 bg-pink-50 flex items-center justify-center font-extrabold text-[11px]";
+                    }
+                } else {
+                    dot.className = "w-5 h-5 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center en-font";
+                    dot.textContent = i;
+                    btn.className = "py-1 rounded-xl border border-slate-200 bg-white flex items-center justify-center font-extrabold text-[11px]";
+                }
+            }
+
+            document.getElementById('progressBadge').textContent = `${answeredCount} / ${TOTAL_QUESTIONS} مجاب`;
+            document.getElementById('progressBar').style.width = `${(answeredCount / TOTAL_QUESTIONS) * 100}%`;
+        }
+
+        function filterSection(secNum) {
+            const tabs = ['all', 1, 2, 3, 4];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === secNum) {
+                    btn.className = "px-4 py-1.5 rounded-xl font-extrabold text-xs sm:text-sm bg-amber-400 text-slate-900 shadow transition";
+                } else {
+                    btn.className = "px-3.5 py-1.5 rounded-xl font-extrabold text-xs sm:text-sm bg-white/10 hover:bg-white/20 text-white transition";
+                }
+            });
+
+            [1, 2, 3, 4].forEach(n => {
+                const block = document.getElementById(`section-block-${n}`);
+                if (secNum === 'all' || secNum === n) {
+                    block.classList.remove('hidden');
+                } else {
+                    block.classList.add('hidden');
+                }
+            });
+        }
+
+        function scrollToQuestion(qNum) {
+            filterSection('all');
+            const target = document.getElementById(`qRow-${qNum}`);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                target.classList.add('ring-4', 'ring-pink-400');
+                setTimeout(() => target.classList.remove('ring-4', 'ring-pink-400'), 1300);
+            }
+        }
+
+        function evaluateQuiz() {
+            filterSection('all');
+            isSubmitted = true;
+            let totalScore = 0;
+
+            for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+                const isCorrect = isQuestionCorrect(i);
+                const correctVal = getCorrectAnswerForQuestion(i);
+                if (isCorrect) totalScore++;
+
+                // تحديث أيقونة لوحة الأسئلة
+                const dot = document.getElementById(`navDot-${i}`);
+                const btn = document.getElementById(`navBtn-${i}`);
+                if (dot && btn) {
+                    if (isCorrect) {
+                        dot.className = "w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center en-font";
+                        dot.textContent = "✓";
+                        btn.className = "py-1 rounded-xl border border-emerald-400 bg-emerald-50 flex items-center justify-center font-extrabold text-[11px]";
+                    } else {
+                        dot.className = "w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center en-font";
+                        dot.textContent = "✗";
+                        btn.className = "py-1 rounded-xl border border-rose-300 bg-rose-50 flex items-center justify-center font-extrabold text-[11px]";
+                    }
+                }
+
+                // تلوين الخيارات المختارة
+                const row = document.getElementById(`qRow-${i}`);
+                if (row) {
+                    if (i <= 10) {
+                        row.querySelectorAll('.check-option.checked').forEach(el => {
+                            el.classList.add(isCorrect ? 'correct-check' : 'wrong-check');
+                        });
+                    } else if (i <= 19) {
+                        row.querySelectorAll('.letter-choice-btn.selected-letter').forEach(el => {
+                            el.classList.add(isCorrect ? 'correct-letter' : 'wrong-letter');
+                        });
+                    } else if (i >= 27) {
+                        row.querySelectorAll('.circle-option.circled').forEach(el => {
+                            el.classList.add(isCorrect ? 'correct-circle' : 'wrong-circle');
+                        });
+                    }
+                }
+
+                // إظهار شارة التصحيح الفوري تحت كل سؤال
+                const badge = document.getElementById(`badge-${i}`);
+                if (badge) {
+                    badge.classList.remove('hidden');
+                    if (isCorrect) {
+                        badge.className = "text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 inline-block";
+                        badge.textContent = "✓ إجابة صحيحة";
+                    } else {
+                        badge.className = "text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 inline-block";
+                        badge.textContent = `✗ الصواب: ${correctVal}`;
+                    }
+                }
+            }
+
+            document.getElementById('headerScore').textContent = totalScore;
+            const percentage = Math.round((totalScore / TOTAL_QUESTIONS) * 100);
+
+            // حساب درجات كل قسم من الأقسام الأربعة
+            const s1Score = Array.from({length: 10}, (_, idx) => idx + 1).filter(isQuestionCorrect).length;
+            const s2Score = Array.from({length: 9}, (_, idx) => idx + 11).filter(isQuestionCorrect).length;
+            const s3Score = Array.from({length: 7}, (_, idx) => idx + 20).filter(isQuestionCorrect).length;
+            const s4Score = Array.from({length: 7}, (_, idx) => idx + 27).filter(isQuestionCorrect).length;
+
+            let levelInfo = {};
+            if (totalScore >= 28) {
+                levelInfo = {
+                    emoji: "🏆",
+                    title: "مستوى متقدم ومتميز (Excellent)",
+                    desc: `أداء رائع! حصل الطالب على ${totalScore} من 33 (${percentage}%) وأتقن المفردات والتهجئة والمعاني بامتياز.`,
+                    recommendation: "الطالب متمكن من قراءة المفردات وتهجئة الحروف وفهم المعاني السياقية، ومستعد للانتقال للمرحلة المتقدمة.",
+                    boxClass: "bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-3.5 text-center shadow-md",
+                    badgeBoxClass: "bg-emerald-50 p-4 rounded-2xl border border-emerald-300",
+                    badgeTextClass: "text-lg font-extrabold text-emerald-800 mt-1"
+                };
+            } else if (totalScore >= 19) {
+                levelInfo = {
+                    emoji: "⭐",
+                    title: "مستوى متوسط (Very Good)",
+                    desc: `أداء جيد جداً! حصل الطالب على ${totalScore} من 33 (${percentage}%) مع حاجته لمراجعة بعض الكلمات.`,
+                    recommendation: "يُنصح بمراجعة الكلمات التي أخطأ بها الطالب في قسم ترتيب الحروف والحرف الناقص لتعزيز مهارة الإملاء.",
+                    boxClass: "bg-gradient-to-br from-amber-500 to-orange-500 text-white rounded-2xl p-3.5 text-center shadow-md",
+                    badgeBoxClass: "bg-amber-50 p-4 rounded-2xl border border-amber-300",
+                    badgeTextClass: "text-lg font-extrabold text-amber-800 mt-1"
+                };
+            } else {
+                levelInfo = {
+                    emoji: "🌱",
+                    title: "مستوى مبتدئ (يحتاج لدعم وتدريب)",
+                    desc: `حصل الطالب على ${totalScore} من 33 (${percentage}%). يحتاج لتدريب إضافي على المفردات وتهجئتها.`,
+                    recommendation: "يُنصح بالاستماع لنطق الكلمات عبر زر الصوت (🔊) والتدرب على كتابة المفردات العشر الأساسية ثم إعادة الاختبار.",
+                    boxClass: "bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-2xl p-3.5 text-center shadow-md",
+                    badgeBoxClass: "bg-rose-50 p-4 rounded-2xl border border-rose-300",
+                    badgeTextClass: "text-lg font-extrabold text-rose-800 mt-1"
+                };
+            }
+
+            const liveLevelBox = document.getElementById('liveLevelBox');
+            liveLevelBox.className = levelInfo.boxClass;
+            document.getElementById('levelEmoji').textContent = levelInfo.emoji;
+            document.getElementById('levelTitle').className = "font-extrabold text-white text-sm";
+            document.getElementById('levelTitle').textContent = levelInfo.title;
+            document.getElementById('levelDesc').className = "text-[11px] text-white/90 mt-1";
+            document.getElementById('levelDesc').textContent = levelInfo.desc;
+
+            // تحديث بطاقة التقرير للطباعة
+            const studentName = document.getElementById('studentName').value.trim();
+            document.getElementById('reportStudentName').textContent = studentName || "طالب متميز";
+            document.getElementById('reportFinalScore').textContent = `${totalScore} / 33`;
+            document.getElementById('reportPercentage').textContent = `النسبة المئوية: ${percentage}%`;
+            document.getElementById('reportLevelBadgeBox').className = levelInfo.badgeBoxClass;
+            document.getElementById('reportFinalLevel').className = levelInfo.badgeTextClass;
+            document.getElementById('reportFinalLevel').textContent = `${levelInfo.emoji} ${levelInfo.title}`;
+            document.getElementById('reportRecommendation').textContent = levelInfo.recommendation;
+            document.getElementById('reportDate').textContent = `تاريخ التقييم: ${new Date().toLocaleDateString('ar-SA')}`;
+
+            const breakdown = [
+                { title: "السؤال 1: التعرف على الصور (Check the correct word)", score: s1Score, max: 10 },
+                { title: "السؤال 2: الحرف الناقص (Choose the missing letter)", score: s2Score, max: 9 },
+                { title: "السؤال 3: ترتيب الحروف (Unscramble the letters)", score: s3Score, max: 7 },
+                { title: "السؤال 4: فهم المعاني (Read and choose)", score: s4Score, max: 7 }
+            ];
+
+            const breakdownEl = document.getElementById('skillsBreakdown');
+            breakdownEl.innerHTML = '';
+            breakdown.forEach(b => {
+                const isFull = b.score === b.max;
+                const div = document.createElement('div');
+                div.className = `p-3.5 rounded-2xl border flex items-center justify-between ${isFull ? 'bg-emerald-50 border-emerald-200' : 'bg-pink-50/70 border-pink-200'}`;
+                div.innerHTML = `
+                    <span class="font-extrabold text-xs sm:text-sm text-slate-800">${b.title}</span>
+                    <span class="en-font font-black text-sm px-2.5 py-1 rounded-xl ${isFull ? 'bg-emerald-200 text-emerald-900' : 'bg-pink-200 text-pink-900'}">${b.score} / ${b.max}</span>
+                `;
+                breakdownEl.appendChild(div);
+            });
+
+            const reportCard = document.getElementById('resultReportCard');
+            reportCard.classList.remove('hidden');
+            reportCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function unlockForEditing() {
+            isSubmitted = false;
+            for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+                const badge = document.getElementById(`badge-${i}`);
+                if (badge) badge.classList.add('hidden');
+            }
+        }
+
+        function printStudentResult() {
+            if (!isSubmitted) evaluateQuiz();
+            setTimeout(() => window.print(), 250);
+        }
+
+        function resetQuiz() {
+            for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+                userAnswers[i] = null;
+            }
+            isSubmitted = false;
+            renderAllSections();
+            document.getElementById('headerScore').textContent = "--";
+            document.getElementById('resultReportCard').classList.add('hidden');
+
+            const liveLevelBox = document.getElementById('liveLevelBox');
+            liveLevelBox.className = "bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-3.5 text-center border border-pink-200";
+            document.getElementById('levelEmoji').textContent = "📊";
+            document.getElementById('levelTitle').className = "font-extrabold text-purple-950 text-sm";
+            document.getElementById('levelTitle').textContent = "بانتظار إكمال الاختبار (33 سؤالاً)";
+            document.getElementById('levelDesc').className = "text-[11px] text-slate-600 mt-1";
+            document.getElementById('levelDesc').textContent = "أجب عن الأسئلة ثم اضغط على اعتماد النتيجة لتحديد المستوى بدقة.";
+
+            updateNavigationPanel();
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-US';
+                u.rate = 0.85;
+                window.speechSynthesis.speak(u);
+            }
+        }
+
+        window.onload = () => {
+            renderAllSections();
+            initSidebarNavigation();
+            updateNavigationPanel();
+        };
+    </script>
+</body>
+</html>
